@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1498146688 source:d:\study\programing\cpp\stuinfom\class.cpp
+	"header.h"
+
+1498146662 d:\study\programing\cpp\stuinfom\header.h
+	<iostream>
+	<fstream>
+	<iomanip>
+	<vector>
+	<stdlib.h>
+
+1498151937 source:d:\study\programing\cpp\stuinfom\main.cpp
+	"header.h"
+
+1498152187 source:d:\study\programing\cpp\stuinfom\function.cpp
+	"header.h"
+
