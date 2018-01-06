@@ -1,10 +1,10 @@
 # 个人简历
 
 #### 身份信息
-|
--	|-							|-		|-
+-|-|-|-
+|-	|-							|-		|-|
 姓名|张梦圆						|性别	|男
-QQ	|[1162045001](http://wpa.qq.com/msgrd?v=3&uin=1162045001&site=gitee.com&menu=yes)|E-mail|joenahm@yeah.net
+|QQ	|[1162045001](http://wpa.qq.com/msgrd?v=3&uin=1162045001&site=gitee.com&menu=yes)|E-mail|joenahm@yeah.net
 学校|青岛理工大学（黄岛新校）	|常用ID|[周南](https://gitee.com/joenahm)、[Joe Nahm](https://github.com/joenahm)、[张弗若](https://space.bilibili.com/13957052/#/)
 
 #### 精神生活
