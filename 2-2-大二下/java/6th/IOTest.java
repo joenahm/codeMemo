@@ -32,7 +32,7 @@ public class IOTest {
 
 			System.out.println("写入成功！");
 		} catch (IOException e) {
-			System.out.println("写入失败！");
+			System.err.println("写入失败！");
 			e.printStackTrace();
 		}
 	}
