@@ -1,5 +1,4 @@
-import javafx.scene.text.Font;
-
+import java.awt.*;
 import javax.swing.*;
 
 public abstract class MainInterface {
@@ -27,9 +26,10 @@ public abstract class MainInterface {
 	abstract void bindList();
 
 	private void initFrame(){
-		String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+        String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
 		try {
-			UIManager.setLookAndFeel(lookAndFeel);
+            UIManager.setLookAndFeel(lookAndFeel);
+            setUIFont (new javax.swing.plaf.FontUIResource("Noto Sans Display",Font.PLAIN,14));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -49,9 +49,18 @@ public abstract class MainInterface {
 		frame.setResizable(false);
 		frame.setVisible(true);
 
-		SwingUtilities.updateComponentTreeUI(frame);
+        SwingUtilities.updateComponentTreeUI(frame);
 	}
-	// setter start
+    public static void setUIFont (javax.swing.plaf.FontUIResource f){
+        java.util.Enumeration keys = UIManager.getLookAndFeelDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get (key);
+            if (value instanceof javax.swing.plaf.FontUIResource)
+                UIManager.put (key, f);
+        }
+    }
+    // setter start
 	public void setName(String name){
 		nameText.setText(name);
 	}
@@ -59,8 +68,11 @@ public abstract class MainInterface {
 		if( gender.equals("男") ){
 			maleRadio.setSelected(true);
 			femaleRadio.setSelected(false);
-		}else{
+		}else if( gender.equals("女") ){
 			femaleRadio.setSelected(true);
+			maleRadio.setSelected(false);
+		}else{
+			femaleRadio.setSelected(false);
 			maleRadio.setSelected(false);
 		}
 	}

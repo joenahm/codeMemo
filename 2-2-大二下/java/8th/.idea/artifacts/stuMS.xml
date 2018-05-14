@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="stuMS">
+    <output-path>$PROJECT_DIR$/out/artifacts/stuMS</output-path>
+    <root id="archive" name="stuMS.jar">
+      <element id="module-output" name="StudentManagementSystem" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/out/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,7 +1,7 @@
 import java.sql.*;
 
 abstract class MySQL<T> {
-	private Connection connection;
+	protected Connection connection;
 //	private ResultSet resource;
 
 	MySQL(String user,String password,String dbName){

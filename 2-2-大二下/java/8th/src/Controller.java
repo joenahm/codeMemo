@@ -5,13 +5,23 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 class Controller extends MainInterface {
+	private Student studentDB;
 	private Vector<StuInfo> stuInfoVector;
 
-	public void setStudentList(Vector<StuInfo> stuInfo){
-		stuInfoVector = stuInfo;
+	void init(String user,String password,String dbName){
+		super.init();
 
+		studentDB = new Student(user,password,dbName);
+		flushStuInfoVec();
+		flushInfoList();
+	}
+
+	private void flushStuInfoVec(){
+		stuInfoVector = studentDB.getStuInfo();
+	}
+	private void flushInfoList(){
 		Vector<String> infoStringVec = new Vector<>();
-		for( StuInfo info : stuInfo ){
+		for( StuInfo info : stuInfoVector ){
 			String infoString = info.name+" "+info.gender+" "+info.id+" "+info.major+info.grade+info.kurasu;
 
 			infoStringVec.add(infoString);
@@ -19,9 +29,25 @@ class Controller extends MainInterface {
 
 		studentList.setListData(infoStringVec);
 	}
+	private void clearInfo(){
+		setName("");
+		setGender("");
+		setID("");
+		setMajor("");
+		setGrade("");
+		setKurasu("");
+	}
+	private StuInfo grabInfo(){
+		StuInfo stuInfo = new StuInfo();
 
-	public Vector<StuInfo> getStuInfoVec(){
-		return stuInfoVector;
+		stuInfo.name = getName();
+		stuInfo.gender = getGender();
+		stuInfo.id = getID();
+		stuInfo.major = getMajor();
+		stuInfo.grade= getGrade();
+		stuInfo.kurasu =getKurasu();
+
+		return stuInfo;
 	}
 
 	void bindButtons(){
@@ -33,7 +59,7 @@ class Controller extends MainInterface {
 	void bindList(){
 		studentList.addListSelectionListener(new listSelect());
 	}
-	void flushInfo(StuInfo stuInfo){
+	private void flushInfo(StuInfo stuInfo){
 		setName(stuInfo.name);
 		setGender(stuInfo.gender);
 		setID(stuInfo.id);
@@ -44,28 +70,45 @@ class Controller extends MainInterface {
 
 	class selectBtnClick implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("我是查询按钮");
+			stuInfoVector = studentDB.selectStuInfo(grabInfo());
+
+			flushInfoList();
+			clearInfo();
 		}
 	}
 	class insertBtnClick implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("我是添加按钮");
+			studentDB.insertStuInfo(grabInfo());
+
+			flushStuInfoVec();
+			flushInfoList();
+			clearInfo();
 		}
 	}
 	class updateBtnClick implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("我是修改按钮");
+			studentDB.updateStuInfo(grabInfo());
+
+			flushStuInfoVec();
+			flushInfoList();
+			clearInfo();
 		}
 	}
 	class deleteBtnClick implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("我是删除按钮");
+		    studentDB.deleteStuInfo(grabInfo());
+
+			flushStuInfoVec();
+		    flushInfoList();
+		    clearInfo();
 		}
 	}
 	class listSelect implements ListSelectionListener{
 		public void valueChanged(ListSelectionEvent e) {
 			int index = studentList.getSelectedIndex();
-			flushInfo(getStuInfoVec().get(index));
+			if( index >= 0 && index < stuInfoVector.size() ) {
+				flushInfo(stuInfoVector.get(index));
+			}
 		}
 	}
 }
