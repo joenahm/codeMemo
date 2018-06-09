@@ -13,7 +13,7 @@ SELECT e1.* FROM EMP e1,emp e2 WHERE e2.ename='SMITH' AND e1.sal>e2.sal;
 -- fangfa2
 
 -- 3
-SELECT e1.ename 员工姓名,e2.ename 上级姓名 FROM EMP e1,EMP e2 WHERE e1.mgr=e2.empno ORDER BY e1.ename;
+SELECT e1.ename 员工姓名,e2.ename 上级姓名 FROM EMP e1 LEFT JOIN EMP e2 ON e1.mgr=e2.empno ORDER BY e1.ename;
 
 -- 4
 SELECT e1.* FROM EMP e1,EMP e2 WHERE e1.mgr=e2.empno AND e1.hiredate < e2.hiredate;
@@ -25,7 +25,7 @@ SELECT d.dname,e.* FROM EMP e FULL JOIN DEPT d ON  e.deptno=d.deptno ORDER BY d.
 SELECT e.ename,d.dname FROM EMP e,DEPT d WHERE e.job='CLERK' AND d.deptno=e.deptno;
 
 -- 7
-SELECT DISTINCT job FROM EMP WHERE sal > 1500;
+SELECT job FROM EMP GROUP BY job HAVING MIN(sal)>1500;
 
 -- 8
 SELECT e.ename FROM EMP e,DEPT d WHERE d.dname='SALES' AND d.deptno=e.deptno;
