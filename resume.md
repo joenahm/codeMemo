@@ -44,7 +44,7 @@
 	最近正在尝试学习用Qt开发跨平台及嵌入式等等的图形界面程序 ...
 
 	- ###### Java
-	充分理解从Java的角度出发的面向对象编程，善于揣测Java语法制定者的心思，乐于对Java语法刨根问底后畅快运用。基于Swing库写过一个 [平台的图形界面程序](https://github.com/joenahm/fileBlender)
+	充分理解从Java的角度出发的面向对象编程，善于揣测Java语法制定者的心思，乐于对Java语法刨根问底后畅快运用。基于Swing库写过一个 [跨平台的图形界面程序](https://github.com/joenahm/fileBlender)
 
 	- ###### Lisp
 	正在学习Common Lisp ...
