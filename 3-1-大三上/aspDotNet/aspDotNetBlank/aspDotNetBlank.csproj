@@ -68,10 +68,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="userInfo.aspx.cs">
+      <DependentUpon>userInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="userInfo.aspx.designer.cs">
+      <DependentUpon>userInfo.aspx</DependentUpon>
+    </Compile>
     <Content Include="Default.aspx" />
     <Compile Include="Default.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Content Include="userInfo.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
