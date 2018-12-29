@@ -68,19 +68,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="userInfo.aspx.cs">
-      <DependentUpon>userInfo.aspx</DependentUpon>
+    <Compile Include="Article.aspx.cs">
+      <DependentUpon>Article.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="userInfo.aspx.designer.cs">
-      <DependentUpon>userInfo.aspx</DependentUpon>
+    <Compile Include="Article.aspx.designer.cs">
+      <DependentUpon>Article.aspx</DependentUpon>
     </Compile>
-    <Content Include="Default.aspx" />
-    <Compile Include="Default.cs" />
-    <Content Include="userInfo.aspx" />
-    <Content Include="Web.config" />
+    <Compile Include="DB.cs" />
+    <Content Include="Article.aspx" />
+    <Content Include="Index.aspx" />
+    <Content Include="List.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

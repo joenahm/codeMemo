@@ -1,0 +1,46 @@
+article {
+  padding: 0; }
+
+#sll {
+  width: 100%;
+  height: 100px; }
+  #sll .sal {
+    padding: 0;
+    width: 100%;
+    margin: 0 auto; }
+    @media screen and (orientation: landscape) {
+      #sll .sal {
+        width: 25%;
+        background: none;
+        float: left; } }
+    #sll .sal .sal_box {
+      width: 95%;
+      margin: 0 auto;
+      background: #fff;
+      padding-bottom: 20px;
+      margin-top: 20px; }
+      @media screen and (orientation: landscape) {
+        #sll .sal .sal_box {
+          margin-top: 0;opacity: 0.7; } }
+      #sll .sal .sal_box:hover {
+        opacity: 1; }
+      #sll .sal .sal_box .sal_img {
+        width: 88%;
+        height: 300px;
+        margin: 0 auto;
+        position: relative;
+        top: 30px;
+        background-position: center;
+        background-size: cover;
+        border: 1px #000 solid; }
+      #sll .sal .sal_box .sal_txt {
+        margin-top: 45px;
+        padding-left: 18px;
+        padding-right: 18px;
+        color: #555; }
+      #sll .sal .sal_box .sal_date {
+        color: #ddd;
+        font-size: 13px;
+        text-align: right;
+        padding-top: 30px;
+        padding-right: 22px; }

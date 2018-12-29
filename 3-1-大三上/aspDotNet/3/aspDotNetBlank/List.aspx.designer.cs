@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace aspDotNetBlank {
+namespace QC {
     
     
-    public partial class userInfo {
+    public partial class List {
     }
 }
