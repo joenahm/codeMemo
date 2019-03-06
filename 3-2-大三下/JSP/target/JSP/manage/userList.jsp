@@ -1,3 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="top.sjydzq.javabean.User" %>
+<%@ page import="top.sjydzq.dao.UserDAO" %>
+<%@ page import="java.util.Vector" %>
+
+<%!
+  String roleMapper(int roleCode) {
+      switch (roleCode) {
+        case 1:
+            return "系统管理员";
+        case 2:
+            return "企业管理员";
+        case 3:
+        default:
+            return "普通用户";
+      }
+  }
+
+  String stateMapper(int stateCode) {
+      switch (stateCode) {
+        case 1:
+            return "启用";
+        case 0:
+        default:
+            return "禁用";
+      }
+  }
+%>
+
 <!doctype html>
 <html>
 <head>
@@ -34,33 +63,23 @@
       </tr>
     </thead>
     <tbody>
+      <%
+          UserDAO userDAO = new UserDAO();
+          Vector<User> users = userDAO.query();
+      %>
+      <% for (User user: users) { %>
+
       <tr height="50px">
         <td ><input name="" type="checkbox" value="" /></td>
-        <td>QST</td>
-        <td>青软实训</td>
-        <td>qst@test.com</td>
-        <td>系统管理员</td>
-        <td>启用</td>
+        <td><%= user.getName() %></td>
+        <td><%= user.getRealName() %></td>
+        <td><%= user.getEmail() %></td>
+        <td><%= roleMapper(user.getRole()) %></td>
+        <td><%= stateMapper(user.getState()) %></td>
         <td ><a href="userAdd.html" class="tablelink">修改</a> &nbsp;&nbsp;<a href="#" class="tablelink"> 删除</a></td>
       </tr>
-      <tr height="50px">
-        <td ><input name="" type="checkbox" value="" /></td>
-        <td>QST</td>
-        <td>青软实训</td>
-        <td>qst@test.com</td>
-        <td>系统管理员</td>
-        <td>启用</td>
-        <td ><a href="userAdd.html" class="tablelink">修改</a> &nbsp;&nbsp;<a href="#" class="tablelink"> 删除</a></td>
-      </tr>
-      <tr height="50px">
-        <td ><input name="" type="checkbox" value="" /></td>
-        <td>QST</td>
-        <td>青软实训</td>
-        <td>qst@test.com</td>
-        <td>系统管理员</td>
-        <td>启用</td>
-        <td ><a href="userAdd.html" class="tablelink">修改</a> &nbsp;&nbsp;<a href="#" class="tablelink"> 删除</a></td>
-      </tr>
+
+      <% } %>
     </tbody>
   </table>
   <div class="pagin">
