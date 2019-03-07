@@ -1,6 +1,5 @@
 package top.sjydzq.dao;
 
-import com.sun.org.apache.regexp.internal.RE;
 import top.sjydzq.javabean.User;
 import top.sjydzq.utils.DB;
 import top.sjydzq.utils.StatementCallback;
@@ -11,6 +10,39 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 public class UserDAO {
+    class InsertSetter extends StatementCallback {
+        private String name;
+        private String password;
+        private String realName;
+        private String email;
+        private int role;
+        private int state;
+
+        InsertSetter(String name, String password, String realName, String email, int role, int state) {
+            this.name = name;
+            this.password = password;
+            this.realName = realName;
+            this.email = email;
+            this.role = role;
+            this.state = state;
+        }
+
+        public void set(PreparedStatement statement) {
+            try {
+                statement.setString(1, name);
+                statement.setString(2, password);
+                statement.setString(3, realName);
+                statement.setString(4, email);
+                statement.setInt(5, role);
+                statement.setInt(6, state);
+            } catch (SQLException e) {
+                System.err.println("为插入用户准备信息时出错！");
+
+                e.printStackTrace();
+            }
+        }
+    }
+
     public boolean save(User user) {
         DB db = new DB();
         InsertSetter insertSetter = new InsertSetter(
@@ -20,7 +52,7 @@ public class UserDAO {
                 user.getEmail(),
                 user.getRole(),
                 user.getState()
-                );
+        );
 
         String sql = "INSERT INTO TB_USERS(user_logname,user_pwd,user_realname,user_email,user_role,user_state) VALUES(?,?,?,?,?,?)";
 
@@ -34,6 +66,7 @@ public class UserDAO {
         DB db = new DB();
 
         CachedRowSet result = db.select("SELECT * FROM TB_USERS");
+        db.close();
 
         Vector<User> users = new Vector<>();
 
@@ -56,38 +89,5 @@ public class UserDAO {
         }
 
         return users;
-    }
-}
-
-class InsertSetter extends StatementCallback {
-    private String name;
-    private String password;
-    private String realName;
-    private String email;
-    private int role;
-    private int state;
-
-    InsertSetter(String name, String password, String realName, String email, int role, int state) {
-        this.name = name;
-        this.password = password;
-        this.realName = realName;
-        this.email = email;
-        this.role = role;
-        this.state = state;
-    }
-
-    public void set(PreparedStatement statement) {
-        try {
-            statement.setString(1, name);
-            statement.setString(2, password);
-            statement.setString(3, realName);
-            statement.setString(4, email);
-            statement.setInt(5, role);
-            statement.setInt(6, state);
-        } catch (SQLException e) {
-            System.err.println("为插入用户准备信息时出错！");
-
-            e.printStackTrace();
-        }
     }
 }
