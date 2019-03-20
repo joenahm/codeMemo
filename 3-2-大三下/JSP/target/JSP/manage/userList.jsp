@@ -31,7 +31,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>企业列表</title>
+<title>用户列表</title>
 <link href="../css/manageadmin.css" rel="stylesheet" type="text/css" />
 </head>
 <body>

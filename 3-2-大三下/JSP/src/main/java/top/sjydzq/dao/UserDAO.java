@@ -43,6 +43,27 @@ public class UserDAO {
         }
     }
 
+    class SelectSetter extends StatementCallback {
+        private String name;
+        private String password;
+
+        SelectSetter(String name, String password) {
+            this.name = name;
+            this.password = password;
+        }
+
+        public void set(PreparedStatement statement) {
+            try {
+                statement.setString(1, name);
+                statement.setString(2, password);
+            } catch (SQLException e) {
+                System.err.println("为查询用户准备信息时出错！");
+
+                e.printStackTrace();
+            }
+        }
+    }
+
     public boolean save(User user) {
         DB db = new DB();
         InsertSetter insertSetter = new InsertSetter(
@@ -89,5 +110,34 @@ public class UserDAO {
         }
 
         return users;
+    }
+
+    public User query(String username, String password) {
+        DB db = new DB();
+        SelectSetter selectSetter = new SelectSetter(username, password);
+
+        String sql = "SELECT * FROM TB_USERS WHERE user_logname=? AND user_pwd=?";
+        CachedRowSet result = db.select(sql, selectSetter);
+        db.close();
+
+        User user = null;
+
+        try {
+            while (result.next()) {
+                user = new User();
+
+                user.setName(result.getString(2));
+                user.setRealName(result.getString(4));
+                user.setEmail(result.getString(5));
+                user.setRole(result.getInt(6));
+                user.setState(result.getInt(7));
+            }
+        } catch (SQLException e) {
+            System.err.println("从数据库取数据时出错！");
+
+            e.printStackTrace();
+        }
+
+        return user;
     }
 }
