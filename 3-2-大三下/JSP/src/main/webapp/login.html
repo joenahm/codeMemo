@@ -87,7 +87,7 @@ body {
 				</div>
 				<div>
 					验证码：<input name="validateCode" id="validateCode" type="text"
-						class="yzm_input" /><img src="images/CaptchaImage.jpg">
+						class="yzm_input" /><img id="captchaImg" src="/captcha">
 				</div>
 				<div align="center">
 					<input type="submit" class="login_button" value="登&nbsp;&nbsp;录"></input>
@@ -96,4 +96,10 @@ body {
 		</div>
 	</div>
 </body>
+<script type="application/javascript">
+	const captchaImg = document.querySelector('#captchaImg');
+	captchaImg.onclick = function() {
+	    this.setAttribute('src', '/captcha?r=' + Math.random());
+    }
+</script>
 </html>
