@@ -95,6 +95,7 @@ public class UserDAO {
             while (result.next()) {
                 User user = new User();
 
+                user.setId(result.getInt(1));
                 user.setName(result.getString(2));
                 user.setRealName(result.getString(4));
                 user.setEmail(result.getString(5));
@@ -126,6 +127,7 @@ public class UserDAO {
             while (result.next()) {
                 user = new User();
 
+                user.setId(result.getInt(1));
                 user.setName(result.getString(2));
                 user.setRealName(result.getString(4));
                 user.setEmail(result.getString(5));

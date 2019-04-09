@@ -88,6 +88,7 @@ public class CompanyDAO {
             while (result.next()) {
                 Company company = new Company();
 
+                company.setId(result.getInt(1));
                 company.setName(result.getString(2));
                 company.setArea(result.getString(3));
                 company.setSize(result.getString(4));
