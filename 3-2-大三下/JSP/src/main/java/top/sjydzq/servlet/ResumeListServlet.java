@@ -1,31 +1,40 @@
 package top.sjydzq.servlet;
 
+import top.sjydzq.dao.ResumeDAO;
+import top.sjydzq.javabean.Resume;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import top.sjydzq.javabean.Page;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "ResumeListServlet")
+@WebServlet(name = "ResumeListServlet", urlPatterns = "/ResumeListServlet")
 public class ResumeListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
 
-        int pageNo = 0;
+        int pageNo = 1;
         int pageSize = 8;
         String reqPageNo = request.getParameter("pageNo");
         String reqPageSize = request.getParameter("pageSize");
 
-        if (Pattern.matches("\\d", reqPageNo)) {
-//            pageNo = Integer.parseInt()
-            System.out.println("是数字");
-        } else {
-            System.out.println("不是数字");
+        if (reqPageNo!=null && Pattern.matches("\\d", reqPageNo)) {
+            pageNo = Integer.parseInt(reqPageNo);
+        }
+        if (reqPageSize!=null && Pattern.matches("\\d", reqPageSize)) {
+            pageSize = Integer.parseInt(reqPageSize);
         }
 
-//        System.out.println();
+        ResumeDAO resumeDAO = new ResumeDAO();
+
+        Page<Resume> page = resumeDAO.queryPagination(pageNo, pageSize);
+
+        request.setAttribute("page", page);
+        request.getRequestDispatcher("/manage/resumeList.jsp").forward(request, response);
     }
 }

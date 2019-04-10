@@ -11,12 +11,13 @@ public class Page<T> implements Serializable {
 
     private int pageSize;
     private int pageNo;
+    private int totalPages;
     private int recordCount;
     private Vector<T> records;
     private boolean hasPrev = false;
     private boolean hasNext = false;
 
-    public Page(int pageSize, int pageNo, Vector<T> records) {
+    public Page(int pageNo, int pageSize, Vector<T> records) {
         this.pageSize = pageSize;
         this.pageNo = pageNo;
         this.records = records;
@@ -65,6 +66,14 @@ public class Page<T> implements Serializable {
 
     public void setRecordCount(int recordCount) {
         this.recordCount = recordCount;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
     }
 
     public void setRecords(Vector<T> records) {
