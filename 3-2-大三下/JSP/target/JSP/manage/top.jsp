@@ -20,7 +20,7 @@
     <li><a href="#">关于</a></li>
     <li><a href="/logout" target="_parent">退出</a></li>
   </ul>
-  <div class="user"><span><%= user.getRealName() %></span></div>
+  <div class="user"><span><%=user.getRealName()%></span></div>
 </div>
 <ul class="nav">
   <li><a href="http://www.itoffer.cn" target="_blank" class="selected"><img  src="../images/globe.png" title="网站前台" />
