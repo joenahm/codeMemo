@@ -13,6 +13,11 @@
       <param-value>SESSION_USER</param-value>
       <description>将当前登录的用户的信息保存在 session 中时使用的key，如果没有配置此参数，则该过滤器不起作用</description>
     </init-param>
+    <init-param>
+      <param-name>redirectUrl</param-name>
+      <param-value>/</param-value>
+      <description>验证失败跳转到的网页</description>
+    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
