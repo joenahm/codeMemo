@@ -64,34 +64,38 @@ public class UserDAO {
         return status;
     }
 
+    private Vector<User> fetchUser(CachedRowSet resultSet) {
+        Vector<User> users = new Vector<>();
+
+        try {
+            while (resultSet.next()) {
+                User user = new User();
+
+                user.setId(resultSet.getInt(1));
+                user.setName(resultSet.getString(2));
+                user.setRealName(resultSet.getString(4));
+                user.setEmail(resultSet.getString(5));
+                user.setRole(resultSet.getInt(6));
+                user.setState(resultSet.getInt(7));
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("从数据库取用户数据时出错！");
+
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
     public Vector<User> query() {
         DB db = new DB();
 
         CachedRowSet result = db.select("SELECT * FROM TB_USERS");
         db.close();
 
-        Vector<User> users = new Vector<>();
-
-        try {
-            while (result.next()) {
-                User user = new User();
-
-                user.setId(result.getInt(1));
-                user.setName(result.getString(2));
-                user.setRealName(result.getString(4));
-                user.setEmail(result.getString(5));
-                user.setRole(result.getInt(6));
-                user.setState(result.getInt(7));
-
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            System.err.println("从数据库取数据时出错！");
-
-            e.printStackTrace();
-        }
-
-        return users;
+        return this.fetchUser(result);
     }
 
     class UserSelectSetter extends StatementCallback {
@@ -125,91 +129,73 @@ public class UserDAO {
 
         User user = null;
 
-        try {
-            while (result.next()) {
-                user = new User();
+        Vector<User> tmpUsers = this.fetchUser(result);
 
-                user.setId(result.getInt(1));
-                user.setName(result.getString(2));
-                user.setRealName(result.getString(4));
-                user.setEmail(result.getString(5));
-                user.setRole(result.getInt(6));
-                user.setState(result.getInt(7));
-            }
-        } catch (SQLException e) {
-            System.err.println("从数据库取数据时出错！");
-
-            e.printStackTrace();
+        if (tmpUsers.size() > 0) {
+            user = tmpUsers.get(0);
         }
 
         return user;
     }
 
-//    class PageSelectSetter extends StatementCallback {
-//
-//    }
+    class PageSelectSetter extends StatementCallback {
+        private int pageNo;
+        private int pageSize;
 
-//    public Page<User> queryPagination(int pageNo, int pageSize) {
-//        DB db = new DB();
-//        ResumeDAO.SelectSetter selectSetter = new ResumeDAO.SelectSetter(pageNo-1, pageSize);
-//        // SQL中是0基的
-//
-//        CachedRowSet records = db.select("SELECT * FROM TB_RESUME_BASICINFO LIMIT ?,?", selectSetter);
-//
-//        Vector<Resume> resumes = new Vector<>();
-//
-//        try {
-//            while (records.next()) {
-//                Resume resume = new Resume();
-//
-//                resume.setId(records.getInt(1));
-//                resume.setRealName(records.getString(3));
-//                resume.setGender(records.getString(4));
-//                resume.setBirthday(records.getDate(5));
-//                resume.setCurrentLocation(records.getString(6));
-//                resume.setResidentLocation(records.getString(7));
-//                resume.setPhone(records.getString(8));
-//                resume.setEmail(records.getString(9));
-//                resume.setIntention(records.getString(10));
-//                resume.setExperience(records.getString(11));
-//                resume.setAvatar(records.getString(12));
-//
-//                resumes.add(resume);
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("从数据库取数据时出错！");
-//
-//            e.printStackTrace();
-//        }
-//
-//        Page<Resume> page = new Page<>(pageNo, pageSize, resumes);
-//        int recordCount = 0;
-//        CachedRowSet count = db.select("SELECT COUNT(*) FROM TB_RESUME_BASICINFO");
-//
-//        db.close();
-//
-//        try {
-//            if (count.next()) {
-//                recordCount = count.getInt(1);
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("从数据库取数据个数时出错！");
-//
-//            e.printStackTrace();
-//        }
-//
-//        page.setTotalPages(Pagination.paginate(recordCount, pageSize));
-//        if (pageNo == 1) {
-//            page.setPrevStatus(false);
-//        } else {
-//            page.setPrevStatus(true);
-//        }
-//        if (page.getTotalPages() <= pageNo) {
-//            page.setNextStatus(false);
-//        } else {
-//            page.setNextStatus(true);
-//        }
-//
-//        return page;
-//    }
+        PageSelectSetter(int pageNo, int pageSize) {
+            this.pageNo = pageNo;
+            this.pageSize = pageSize;
+        }
+
+        public void set(PreparedStatement statement) {
+            try {
+                statement.setInt(1, pageNo);
+                statement.setInt(2, pageSize);
+            } catch (SQLException e) {
+                System.err.println("为查询用户信息准备分页信息时出错！");
+
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Page<User> queryPagination(int pageNo, int pageSize) {
+        DB db = new DB();
+        PageSelectSetter selectSetter = new PageSelectSetter(pageNo-1, pageSize);
+        // SQL中是0基的
+
+        CachedRowSet records = db.select("SELECT * FROM TB_USERS LIMIT ?,?", selectSetter);
+
+        Vector<User> users = this.fetchUser(records);
+
+        Page<User> page = new Page<>(pageNo, pageSize, users);
+        int recordCount = 0;
+        CachedRowSet count = db.select("SELECT COUNT(*) FROM TB_USERS");
+
+        db.close();
+
+        try {
+            if (count.next()) {
+                recordCount = count.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("从数据库取用户数据个数时出错！");
+
+            e.printStackTrace();
+        }
+
+        page.setTotalPages(Pagination.paginate(recordCount, pageSize));
+        if (pageNo == 1) {
+            page.setPrevStatus(false);
+        } else {
+            page.setPrevStatus(true);
+        }
+        if (page.getTotalPages() <= pageNo) {
+            page.setNextStatus(false);
+        } else {
+            page.setNextStatus(true);
+        }
+
+        return page;
+    }
 }

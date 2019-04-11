@@ -36,8 +36,8 @@
     </thead>
     <tbody>
       <%
-          Page<Resume> pageInfo = (Page<Resume>)request.getAttribute("page");
-          Vector<Resume> resumes = pageInfo.getRecords();
+          Page<Resume> resumeListPage = (Page<Resume>)request.getAttribute("resumeList");
+          Vector<Resume> resumes = resumeListPage.getRecords();
       %>
       <% for (Resume resume : resumes) { %>
         <tr height="50px">
@@ -53,16 +53,16 @@
     </tbody>
   </table>
  <div class="pagin">
-    <div class="message">共&nbsp;<i class="blue"><%=pageInfo.getTotalPages()%></i>&nbsp;页，当前显示第&nbsp;<i class="blue"><%=pageInfo.getPageNo()%></i>&nbsp;页</div>
+    <div class="message">共&nbsp;<i class="blue"><%=resumeListPage.getTotalPages()%></i>&nbsp;页，当前显示第&nbsp;<i class="blue"><%=resumeListPage.getPageNo()%></i>&nbsp;页</div>
     <ul class="paginList">
       <li class="paginItem"><a href="/ResumeListServlet?pageNo=1">首页</a></li>
-      <% if (pageInfo.hasPrev()) { %>
-        <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=pageInfo.getPageNo()-1%>">上一页<span class="pagepre"></span></a></li>
+      <% if (resumeListPage.hasPrev()) { %>
+        <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=resumeListPage.getPageNo()-1%>">上一页<span class="pagepre"></span></a></li>
       <% } %>
-      <% if (pageInfo.hasNext()) { %>
-        <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=pageInfo.getPageNo()+1%>">下一页<span class="pagenxt"></span></a></li>
+      <% if (resumeListPage.hasNext()) { %>
+        <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=resumeListPage.getPageNo()+1%>">下一页<span class="pagenxt"></span></a></li>
       <% } %>
-      <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=pageInfo.getTotalPages()%>">尾页</a></li>
+      <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=resumeListPage.getTotalPages()%>">尾页</a></li>
     </ul>
   </div>
 </div>

@@ -18,6 +18,7 @@
       <param-value>/</param-value>
       <description>验证失败跳转到的网页</description>
     </init-param>
+    <!-- TODO 没有做Servlet的访问控制！ -->
   </filter>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>

@@ -2,6 +2,8 @@ package top.sjydzq.servlet;
 
 import top.sjydzq.config.Config;
 import top.sjydzq.dao.UserDAO;
+import top.sjydzq.javabean.Page;
+import top.sjydzq.javabean.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +33,9 @@ public class UserListServlet extends HttpServlet {
 
         UserDAO userDAO = new UserDAO();
 
+        Page<User> page = userDAO.queryPagination(pageNo, pageSize);
 
+        request.setAttribute("userList", page);
+        request.getRequestDispatcher("/manage/userList.jsp").forward(request, response);
     }
 }

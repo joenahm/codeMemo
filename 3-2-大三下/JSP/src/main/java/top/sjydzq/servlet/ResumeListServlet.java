@@ -35,7 +35,7 @@ public class ResumeListServlet extends HttpServlet {
 
         Page<Resume> page = resumeDAO.queryPagination(pageNo, pageSize);
 
-        request.setAttribute("page", page);
+        request.setAttribute("resumeList", page);
         request.getRequestDispatcher("/manage/resumeList.jsp").forward(request, response);
     }
 }

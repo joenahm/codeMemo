@@ -2,6 +2,7 @@
 <%@ page import="java.util.Vector" %>
 <%@ page import="top.sjydzq.javabean.User" %>
 <%@ page import="top.sjydzq.dao.UserDAO" %>
+<%@ page import="top.sjydzq.javabean.Page" %>
 
 <%!
   String roleMapper(int roleCode) {
@@ -48,7 +49,7 @@
       <li class="click"><span><img src="../images/t02.png" /></span><a href="userAdd.html">修改</a></li>
       <li><span><img src="../images/t03.png" /></span><a href="userDelete.html">删除</a></li>
     </ul>
-    <iframe src="userSearch.html" scrolling="no" frameborder="0" width="400" height="42"></iframe>
+    <iframe src="/manage/userSearch.html" scrolling="no" frameborder="0" width="400" height="42"></iframe>
   </div>
   <table class="imgtable">
     <thead>
@@ -64,8 +65,8 @@
     </thead>
     <tbody>
       <%
-          UserDAO userDAO = new UserDAO();
-          Vector<User> users = userDAO.query();
+        Page<User> userListPage = (Page<User>)request.getAttribute("userList");
+        Vector<User> users = userListPage.getRecords();
       %>
       <% for (User user: users) { %>
 
@@ -83,12 +84,19 @@
     </tbody>
   </table>
   <div class="pagin">
-    <div class="message">共<i class="blue">1256</i>页，当前显示第&nbsp;<i class="blue">2&nbsp;</i>页</div>
+    <div class="message">
+      共&nbsp;<i class="blue"><%=userListPage.getTotalPages()%></i>
+      &nbsp;页，当前显示第&nbsp;<i class="blue"><%=userListPage.getPageNo()%></i>&nbsp;页
+    </div>
     <ul class="paginList">
-      <li class="paginItem"><a href="javascript:;">首页</a></li>
-      <li class="paginItem"><a href="javascript:;">上一页<span class="pagepre"></span></a></li>
-      <li class="paginItem"><a href="javascript:;">下一页<span class="pagenxt"></span></a></li>
-       <li class="paginItem"><a href="javascript:;">尾页</a></li>
+      <li class="paginItem"><a href="/UserListServlet?pageNo=1">首页</a></li>
+      <% if (userListPage.hasPrev()) { %>
+      <li class="paginItem"><a href="/UserListServlet?pageNo=<%=userListPage.getPageNo()-1%>">上一页<span class="pagepre"></span></a></li>
+      <% } %>
+      <% if (userListPage.hasNext()) { %>
+      <li class="paginItem"><a href="/UserListServlet?pageNo=<%=userListPage.getPageNo()+1%>">下一页<span class="pagenxt"></span></a></li>
+      <% } %>
+      <li class="paginItem"><a href="/UserListServlet?pageNo=<%=userListPage.getTotalPages()%>">尾页</a></li>
     </ul>
   </div>
 </div>
