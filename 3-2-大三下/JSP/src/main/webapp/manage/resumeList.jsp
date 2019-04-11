@@ -1,8 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="top.sjydzq.javabean.Page" %>
 <%@ page import="java.util.Vector" %>
 <%@ page import="top.sjydzq.javabean.Resume" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html>
 <head>
@@ -60,7 +59,7 @@
       <% if (pageInfo.hasPrev()) { %>
         <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=pageInfo.getPageNo()-1%>">上一页<span class="pagepre"></span></a></li>
       <% } %>
-      <% if (pageInfo.hasPrev()) { %>
+      <% if (pageInfo.hasNext()) { %>
         <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=pageInfo.getPageNo()+1%>">下一页<span class="pagenxt"></span></a></li>
       <% } %>
       <li class="paginItem"><a href="/ResumeListServlet?pageNo=<%=pageInfo.getTotalPages()%>">尾页</a></li>

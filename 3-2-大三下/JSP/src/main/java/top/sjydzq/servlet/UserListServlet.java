@@ -1,8 +1,7 @@
 package top.sjydzq.servlet;
 
 import top.sjydzq.config.Config;
-import top.sjydzq.dao.ResumeDAO;
-import top.sjydzq.javabean.Resume;
+import top.sjydzq.dao.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import top.sjydzq.javabean.Page;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "ResumeListServlet", urlPatterns = "/ResumeListServlet")
-public class ResumeListServlet extends HttpServlet {
+@WebServlet(name = "UserListServlet", urlPatterns = "/UserListServlet")
+public class UserListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
@@ -31,11 +29,8 @@ public class ResumeListServlet extends HttpServlet {
             pageSize = Integer.parseInt(reqPageSize);
         }
 
-        ResumeDAO resumeDAO = new ResumeDAO();
+        UserDAO userDAO = new UserDAO();
 
-        Page<Resume> page = resumeDAO.queryPagination(pageNo, pageSize);
 
-        request.setAttribute("page", page);
-        request.getRequestDispatcher("/manage/resumeList.jsp").forward(request, response);
     }
 }
