@@ -29,7 +29,7 @@ public class UserAddServlet extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         if (userDAO.save(user)) {
-            response.sendRedirect("/manage/userList.jsp");
+            response.sendRedirect("/UserListServlet");
         } else {
             response.getWriter().println("添加用户失败!");
         }

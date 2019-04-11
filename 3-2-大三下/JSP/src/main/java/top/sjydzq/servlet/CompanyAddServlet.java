@@ -35,7 +35,7 @@ public class CompanyAddServlet extends HttpServlet {
         CompanyDAO companyDAO = new CompanyDAO();
 
         if (companyDAO.save(company)) {
-            response.sendRedirect("/manage/companyList.jsp");
+            response.sendRedirect("/CompanyListServlet");
         } else {
             response.getWriter().println("添加公司失败！");
         }

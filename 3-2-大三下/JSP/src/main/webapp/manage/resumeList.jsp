@@ -47,7 +47,7 @@
           <td><%=resume.getEmail()%></td>
           <td><%=resume.getExperience()%></td>
           <td><%=resume.getIntention()%></td>
-          <td ><a href="resumeView.html" class="tablelink">查看</a> &nbsp;&nbsp;<a href="#" class="tablelink"> 删除</a></td>
+          <td ><a href="/ResumeViewServlet?id=<%=resume.getId()%>" class="tablelink">查看</a> &nbsp;&nbsp;<a href="#" class="tablelink"> 删除</a></td>
         </tr>
       <% } %>
     </tbody>

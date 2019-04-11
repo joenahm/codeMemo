@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="top.sjydzq.javabean.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -27,33 +29,40 @@ $(function(){
 </head>
 <body style="background:#f0f9fd;">
 <div class="lefttop"><span></span>功能菜单</div>
+<%
+  User user = (User)request.getSession().getAttribute("SESSION_USER");
+%>
 <dl class="leftmenu">
-  <dd>
-    <div class="title"> <span><img src="../images/leftico01.png" /></span>企业职位管理</div>
-    <ul class="menuson">
-      <li><cite></cite><a href="jobApplyList.html" target="rightFrame">职位申请查看</a><i></i></li>
-      <li><cite></cite><a href="jobList.html" target="rightFrame">职位管理</a><i></i></li>
-      <li><cite></cite><a href="companyList.jsp" target="rightFrame">企业管理</a><i></i></li>
-    </ul>
-  </dd>
+  <% if (user.getRole() == 1 || user.getRole() == 2) { %>
+    <dd>
+        <div class="title"> <span><img src="../images/leftico01.png" /></span>企业职位管理</div>
+        <ul class="menuson">
+            <li><cite></cite><a href="jobApplyList.html" target="rightFrame">职位申请查看</a><i></i></li>
+            <li><cite></cite><a href="jobList.html" target="rightFrame">职位管理</a><i></i></li>
+            <li><cite></cite><a href="/CompanyListServlet" target="rightFrame">企业管理</a><i></i></li>
+        </ul>
+    </dd>
+  <% } %>
   <dd>
     <div class="title"> <span><img src="../images/leftico02.png" /></span>简历管理</div>
     <ul class="menuson">
       <li><cite></cite><a href="/ResumeListServlet" target="rightFrame">简历查询</a><i></i></li>
     </ul>
   </dd>
-  <dd>
-    <div class="title"><span><img src="../images/leftico03.png"/></span>用户管理</div>
-  	<ul class="menuson">
-      <li><cite></cite><a href="/UserListServlet" target="rightFrame">用户管理</a><i></i></li>
-    </ul>
-  </dd>
-  <dd>
-    <div class="title"><span><img src="../images/leftico04.png" /></span>系统管理</div>
-    <ul class="menuson">
-      <li><cite></cite><a href="userOnline.html" target="rightFrame">在线用户</a><i></i></li>
-    </ul>
-  </dd>
+  <% if (user.getRole() == 1) { %>
+    <dd>
+      <div class="title"><span><img src="../images/leftico03.png"/></span>用户管理</div>
+      <ul class="menuson">
+        <li><cite></cite><a href="/UserListServlet" target="rightFrame">用户管理</a><i></i></li>
+      </ul>
+    </dd>
+    <dd>
+      <div class="title"><span><img src="../images/leftico04.png" /></span>系统管理</div>
+      <ul class="menuson">
+        <li><cite></cite><a href="userOnline.html" target="rightFrame">在线用户</a><i></i></li>
+      </ul>
+    </dd>
+  <% } %>
   <dd>
     <div class="title"><span><img src="../images/leftico04.png" /></span>密码修改</div>
   </dd>

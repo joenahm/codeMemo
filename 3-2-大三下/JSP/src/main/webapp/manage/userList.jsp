@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Vector" %>
 <%@ page import="top.sjydzq.javabean.User" %>
-<%@ page import="top.sjydzq.dao.UserDAO" %>
 <%@ page import="top.sjydzq.javabean.Page" %>
 
 <%!
@@ -45,9 +44,9 @@
 <div class="rightinfo">
   <div class="tools">
     <ul class="toolbar">
-      <li class="click"><span><img src="../images/t01.png" /></span><a href="userAdd.html">添加</a></li>
-      <li class="click"><span><img src="../images/t02.png" /></span><a href="userAdd.html">修改</a></li>
-      <li><span><img src="../images/t03.png" /></span><a href="userDelete.html">删除</a></li>
+      <li class="click"><span><img src="../images/t01.png" /></span><a href="/manage/userAdd.html">添加</a></li>
+      <li class="click"><span><img src="../images/t02.png" /></span><a href="#">修改</a></li>
+      <li><span><img src="../images/t03.png" /></span><a href="#">删除</a></li>
     </ul>
     <iframe src="/manage/userSearch.html" scrolling="no" frameborder="0" width="400" height="42"></iframe>
   </div>

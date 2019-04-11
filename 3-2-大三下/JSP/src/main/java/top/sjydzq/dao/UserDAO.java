@@ -4,6 +4,7 @@ import top.sjydzq.javabean.Page;
 import top.sjydzq.javabean.User;
 import top.sjydzq.utils.DB;
 import top.sjydzq.utils.Pagination;
+import top.sjydzq.utils.PaginationSetter;
 import top.sjydzq.utils.StatementCallback;
 
 import javax.sql.rowset.CachedRowSet;
@@ -67,23 +68,25 @@ public class UserDAO {
     private Vector<User> fetchUser(CachedRowSet resultSet) {
         Vector<User> users = new Vector<>();
 
-        try {
-            while (resultSet.next()) {
-                User user = new User();
+        if (resultSet != null) {
+            try {
+                while (resultSet.next()) {
+                    User user = new User();
 
-                user.setId(resultSet.getInt(1));
-                user.setName(resultSet.getString(2));
-                user.setRealName(resultSet.getString(4));
-                user.setEmail(resultSet.getString(5));
-                user.setRole(resultSet.getInt(6));
-                user.setState(resultSet.getInt(7));
+                    user.setId(resultSet.getInt(1));
+                    user.setName(resultSet.getString(2));
+                    user.setRealName(resultSet.getString(4));
+                    user.setEmail(resultSet.getString(5));
+                    user.setRole(resultSet.getInt(6));
+                    user.setState(resultSet.getInt(7));
 
-                users.add(user);
+                    users.add(user);
+                }
+            } catch (SQLException e) {
+                System.err.println("从数据库取用户数据时出错！");
+
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            System.err.println("从数据库取用户数据时出错！");
-
-            e.printStackTrace();
         }
 
         return users;
@@ -138,30 +141,9 @@ public class UserDAO {
         return user;
     }
 
-    class PageSelectSetter extends StatementCallback {
-        private int pageNo;
-        private int pageSize;
-
-        PageSelectSetter(int pageNo, int pageSize) {
-            this.pageNo = pageNo;
-            this.pageSize = pageSize;
-        }
-
-        public void set(PreparedStatement statement) {
-            try {
-                statement.setInt(1, pageNo);
-                statement.setInt(2, pageSize);
-            } catch (SQLException e) {
-                System.err.println("为查询用户信息准备分页信息时出错！");
-
-                e.printStackTrace();
-            }
-        }
-    }
-
     public Page<User> queryPagination(int pageNo, int pageSize) {
         DB db = new DB();
-        PageSelectSetter selectSetter = new PageSelectSetter(pageNo-1, pageSize);
+        PaginationSetter selectSetter = new PaginationSetter(pageNo-1, pageSize);
         // SQL中是0基的
 
         CachedRowSet records = db.select("SELECT * FROM TB_USERS LIMIT ?,?", selectSetter);
@@ -169,20 +151,12 @@ public class UserDAO {
         Vector<User> users = this.fetchUser(records);
 
         Page<User> page = new Page<>(pageNo, pageSize, users);
-        int recordCount = 0;
+
         CachedRowSet count = db.select("SELECT COUNT(*) FROM TB_USERS");
 
         db.close();
 
-        try {
-            if (count.next()) {
-                recordCount = count.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.err.println("从数据库取用户数据个数时出错！");
-
-            e.printStackTrace();
-        }
+        int recordCount = Pagination.getRecordCount(count);
 
         page.setTotalPages(Pagination.paginate(recordCount, pageSize));
         if (pageNo == 1) {

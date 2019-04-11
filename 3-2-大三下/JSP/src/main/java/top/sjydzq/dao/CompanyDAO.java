@@ -1,7 +1,10 @@
 package top.sjydzq.dao;
 
 import top.sjydzq.javabean.Company;
+import top.sjydzq.javabean.Page;
 import top.sjydzq.utils.DB;
+import top.sjydzq.utils.Pagination;
+import top.sjydzq.utils.PaginationSetter;
 import top.sjydzq.utils.StatementCallback;
 
 import javax.sql.rowset.CachedRowSet;
@@ -76,37 +79,75 @@ public class CompanyDAO {
         return status;
     }
 
+    private Vector<Company> fetchCompany(CachedRowSet resultSet) {
+        Vector<Company> companies = new Vector<>();
+
+        if (resultSet != null) {
+            try {
+                while (resultSet.next()) {
+                    Company company = new Company();
+
+                    company.setId(resultSet.getInt(1));
+                    company.setName(resultSet.getString(2));
+                    company.setArea(resultSet.getString(3));
+                    company.setSize(resultSet.getString(4));
+                    company.setType(resultSet.getString(5));
+                    company.setBrief(resultSet.getString(6));
+                    company.setState(resultSet.getInt(7));
+                    company.setSort(resultSet.getInt(8));
+                    company.setViewNum(resultSet.getString(9));
+                    company.setPic(resultSet.getString(10));
+
+                    companies.add(company);
+                }
+            } catch (SQLException e) {
+                System.err.println("从数据库取公司数据时出错！");
+
+                e.printStackTrace();
+            }
+        }
+
+        return companies;
+    }
+
     public Vector<Company> query() {
         DB db = new DB();
 
         CachedRowSet result = db.select("SELECT * FROM TB_COMPANY");
         db.close();
 
-        Vector<Company> companies = new Vector<>();
+        return this.fetchCompany(result);
+    }
 
-        try {
-            while (result.next()) {
-                Company company = new Company();
+    public Page<Company> queryPagination(int pageNo, int pageSize) {
+        DB db = new DB();
+        PaginationSetter selectSetter = new PaginationSetter(pageNo-1, pageSize);
+        // SQL中是0基的
 
-                company.setId(result.getInt(1));
-                company.setName(result.getString(2));
-                company.setArea(result.getString(3));
-                company.setSize(result.getString(4));
-                company.setType(result.getString(5));
-                company.setBrief(result.getString(6));
-                company.setState(result.getInt(7));
-                company.setSort(result.getInt(8));
-                company.setViewNum(result.getString(9));
-                company.setPic(result.getString(10));
+        CachedRowSet records = db.select("SELECT * FROM TB_COMPANY LIMIT ?,?", selectSetter);
 
-                companies.add(company);
-            }
-        } catch (SQLException e) {
-            System.err.println("从数据库取数据时出错！");
+        Vector<Company> companies = this.fetchCompany(records);
 
-            e.printStackTrace();
+        Page<Company> page = new Page<>(pageNo, pageSize, companies);
+
+        CachedRowSet count = db.select("SELECT COUNT(*) FROM TB_COMPANY");
+
+        db.close();
+
+        int recordCount = Pagination.getRecordCount(count);
+
+        page.setTotalPages(Pagination.paginate(recordCount, pageSize));
+        if (pageNo == 1) {
+            page.setPrevStatus(false);
+        } else {
+            page.setPrevStatus(true);
+        }
+        if (page.getTotalPages() <= pageNo) {
+            page.setNextStatus(false);
+        } else {
+            page.setNextStatus(true);
         }
 
-        return companies;
+        return page;
     }
 }

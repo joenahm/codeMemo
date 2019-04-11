@@ -23,76 +23,76 @@ public class Company implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getArea() {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
-
     public String getSize() {
         return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getBrief() {
         return brief;
-    }
-
-    public void setBrief(String brief) {
-        this.brief = brief;
     }
 
     public int getState() {
         return state;
     }
 
-    public void setState(int state) {
-        this.state = state;
-    }
-
     public int getSort() {
         return sort;
-    }
-
-    public void setSort(int sort) {
-        this.sort = sort;
     }
 
     public String getViewNum() {
         return viewNum;
     }
 
-    public void setViewNum(String viewNum) {
-        this.viewNum = viewNum;
-    }
-
     public String getPic() {
         return pic;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public void setViewNum(String viewNum) {
+        this.viewNum = viewNum;
     }
 
     public void setPic(String pic) {
