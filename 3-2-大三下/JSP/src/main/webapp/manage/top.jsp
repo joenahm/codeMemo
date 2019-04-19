@@ -11,14 +11,14 @@
 <link href="../css/manageadmin.css" rel="stylesheet" type="text/css" />
 </head>
 <body style="background:url(../images/topbg.gif) repeat-x;">
-<div class="topleft"> 
+<div class="topleft">
 <a href="main.jsp" target="_parent"><img src="../images/main_logo.png" title="系统首页" /></a> </div>
 
 <div class="topright">
   <ul>
     <li><span><img src="../images/help.png" title="帮助"  class="helpimg"/></span><a href="#">帮助</a></li>
     <li><a href="#">关于</a></li>
-    <li><a href="/logout" target="_parent">退出</a></li>
+    <li><a href="/logout?uid=<%=user.getId()%>&type=normal" target="_parent">退出</a></li>
   </ul>
   <div class="user"><span><%=user.getRealName()%></span></div>
 </div>
