@@ -59,7 +59,7 @@ $(function(){
     <dd>
       <div class="title"><span><img src="../images/leftico04.png" /></span>系统管理</div>
       <ul class="menuson">
-        <li><cite></cite><a href="userOnline.html" target="rightFrame">在线用户</a><i></i></li>
+        <li><cite></cite><a href="userOnline.jsp" target="rightFrame">在线用户</a><i></i></li>
       </ul>
     </dd>
   <% } %>
