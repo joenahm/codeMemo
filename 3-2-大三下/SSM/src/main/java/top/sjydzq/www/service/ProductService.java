@@ -6,7 +6,7 @@ import top.sjydzq.www.model.Product;
 
 import java.util.List;
 
-@Repository("productService")
+@Repository("productDAO")
 @Mapper
 public interface ProductService {
     public List<Product> selectAll();
