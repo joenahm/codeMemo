@@ -4,17 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd"
 >
 <configuration>
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC" />
-            <dataSource type="POOLED">
-                <property name="driver" value="org.mariadb.jdbc.Driver" />
-                <property name="url" value="jdbc:mariadb://123.207.146.49:2614/joe" />
-                <property name="username" value="joe" />
-                <property name="password" value="00001011" />
-            </dataSource>
-        </environment>
-    </environments>
     <mappers>
         <mapper resource="ProductMapper.xml" />
     </mappers>
