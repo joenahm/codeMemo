@@ -17,9 +17,9 @@
         class="org.springframework.jdbc.datasource.DriverManagerDataSource"
     >
         <property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-        <property name="url" value="jdbc:mariadb://123.207.146.49:2614/joe" />
-        <property name="username" value="joe" />
-        <property name="password" value="00001011" />
+        <property name="url" value="数据库地址" />
+        <property name="username" value="用户名" />
+        <property name="password" value="密码" />
     </bean>
     <bean
         id="txManager"
