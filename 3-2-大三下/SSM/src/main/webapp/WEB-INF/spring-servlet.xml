@@ -14,9 +14,15 @@
 
     <!-- 配置扫描的包 -->
     <context:component-scan base-package="top.sjydzq.www.controller" />
+    <context:component-scan base-package="top.sjydzq.www.service" />
+
+    <!--注册校验器-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+    </bean>
 
     <!-- 注册HandlerMapper、HandlerAdapter两个映射类 -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven validator="validator" />
 
     <!-- 访问静态资源 -->
     <mvc:default-servlet-handler />

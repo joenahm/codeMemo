@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,13 +19,11 @@
 </head>
 <body>
     <h4>注册信息提交</h4>
-    <form action="handle" method="POST">
-        <input type="text" name="name" placeholder="姓名" />
-        <input type="number" name="id" placeholder="身份证号" />
-        <input type="email" name="email" placeholder="邮箱">
-        <input type="text" name="addr" placeholder="地址">
-
+    <form:form action="register" method="post" modelAttribute="user">
+        <form:input path="username" placeholder="用户名" />
+        <form:password path="password" placeholder="密码" />
+        <form:password path="confirm" placeholder="确认密码" />
         <input type="submit">
-    </form>
+    </form:form>
 </body>
 </html>
