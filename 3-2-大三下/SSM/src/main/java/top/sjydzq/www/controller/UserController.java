@@ -7,10 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import top.sjydzq.www.POJO.User;
+import top.sjydzq.www.POJO.POJOUser;
+import top.sjydzq.www.bean.User;
 import top.sjydzq.www.service.UserService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -18,25 +20,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/register")
+    @RequestMapping("/search")
     public String registerView(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new POJOUser());
 
-        return "User/Register";
+        return "User/Search";
     }
-    @RequestMapping(value="/register", method= RequestMethod.POST)
-    public String handleRegister(@Valid @ModelAttribute("user") User user, BindingResult errors) {
+    @RequestMapping(value="/search", method= RequestMethod.POST)
+    public String handleRegister(@Valid @ModelAttribute("user") POJOUser inputPOJOUser, BindingResult errors, Model model) {
         if (errors.hasErrors()) {
-            return "User/Register";
+            return "User/Search";
         } else {
-            userService.insert(user);
+            List<User> users = userService.selectByName(inputPOJOUser.getUsername());
 
-            return "User/Login";
+            model.addAttribute("users", users);
+
+            return "User/List";
         }
-    }
-
-    @RequestMapping("/login")
-    public String loginView() {
-        return "User/Login";
     }
 }

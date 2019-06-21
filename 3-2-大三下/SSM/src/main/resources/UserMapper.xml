@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="top.sjydzq.www.service.UserService">
+    <select id="selectAll" resultType="top.sjydzq.www.bean.User">
+        SELECT * FROM Account
+    </select>
+    <select
+        id="selectById"
+        parameterType="Integer"
+        resultType="top.sjydzq.www.bean.User"
+    >
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+    <select
+        id="selectByName"
+        parameterType="String"
+        resultType="top.sjydzq.www.bean.User"
+    >
+        <bind name="fname" value="'%' + _parameter + '%'" />
+        SELECT * FROM Account WHERE uname LIKE #{fname}
+    </select>
+</mapper>
